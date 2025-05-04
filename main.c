@@ -1,18 +1,35 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "functions.h"
-#include <stdlib.h>
+#include <stdio.h>
+int main() {
+	printf("1. IGRAJ\n");
+	printf("2. DODAJ IGRACA\n");
+	printf("3. IZBRISI IGRACA\n");
+	printf("4. IZLAZ\n");
 
-typedef struct person{
-	char name[8];
-	int age;
-}PERSON;
+	int choice;
+	scanf("%d", &choice);
 
-int main(){
 
-	PERSON* osoba = (PERSON*)malloc(sizeof(PERSON)*1);
-	osoba->age = 20;
-	printf("osoba ima godina : %d", osoba->age);
-	
+	switch (choice)
+	{
+	case Igraj:
+		printf("Igram");
+	case DodajIgraca:
+		printf("Dodajem");
+	case IzbrisiIgraca:
+		printf("Brisem");
+	case Izlaz:
+		printf("Izlazim");
+	default:
+		printf("Nista od navedenog");
+		break;
+	}
+
+
 
 
 	return 0;
+	
 }
