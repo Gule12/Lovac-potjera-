@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
@@ -5,9 +7,11 @@
 #define MAX_DUZINA_PITANJA 50
 #define MAX_DUZINA_ODGOVORA 50
 #define MAX_IGRACA 50
+//9
+#define PRINT() printf("\0");
 
 typedef struct {
-    char pitanje[MAX_DUZINA_PITANJA];
+    char pitanje[MAX_DUZINA_PITANJA]; //15
     char prviOdgovor[MAX_DUZINA_ODGOVORA];
     char drugiOdgovor[MAX_DUZINA_ODGOVORA];
     char treciOdgovor[MAX_DUZINA_ODGOVORA];
@@ -25,7 +29,6 @@ int zauzmiMemorijuPitanja();
 void oslobodiMemorijuPitanja();
 int zauzmiMemorijuIgraca();
 void oslobodiMemorijuIgraca();
-void initializeQuestions();
 void postaviPitanje(int brojPitanja);
 char izborIgraca();
 void pokreniIgru(int* rezultat);
