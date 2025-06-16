@@ -15,16 +15,16 @@ void isprazniOdabir() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
-
+//16,17
 int zauzmiMemorijuPitanja() {
     pitanje = (Pitanja*)calloc(MAX_PITANJA, sizeof(Pitanja));
     if (pitanje == NULL) {
-        perror("memorija pitanja");
+        perror("memorija pitanja"); //22
         return 1;
     }
     return 0;
 }
-
+//18
 void oslobodiMemorijuPitanja() {
     free(pitanje);
 }
@@ -51,7 +51,6 @@ void dodajIgraca(const char* imeIgraca) {
 
     fprintf(file, "%s 0\n", imeIgraca); // Initialize with a score of 0
     fclose(file);
-    brojIgraca++;
     printf("Igrac uspjesno dodan.\n");
 }
 
@@ -182,7 +181,7 @@ char izborIgraca() {
     scanf(" %c", &izbor);
     return izbor;
 }
-
+//12
 void pokreniIgru(int* rezultat) {
     inicijalizacijaPitanja();
     int trenutnoPitanje = 0;
@@ -211,7 +210,7 @@ void pokreniIgru(int* rezultat) {
 
     *rezultat = osvojeno;
 }
-
+//24
 int pronadiIgraca(const char* imeIgraca, int* rezultat) {
     FILE* file = fopen("igraci.txt", "r");
     if (file == NULL) {
@@ -259,7 +258,7 @@ void azurirajRezultat(const char* imeIgraca, int noviRezultat) {
             fprintf(tempfile, "%s %d\n", postojeciIgrac, postojeciRezultat);
         }
     }
-
+    //21
     fclose(file);
     fclose(tempfile);
     remove("igraci.txt");
@@ -267,21 +266,20 @@ void azurirajRezultat(const char* imeIgraca, int noviRezultat) {
 }
 
 void citajIgrace() {
-    //brojigraca = 0; // Reset player count before reading
+    brojIgraca = 0; // Reset player count before reading
     FILE* file = fopen("igraci.txt", "r");
     if (file == NULL) {
         perror("citajIgrace");
         return;
     }
 
-    for (int i = 0; i < brojIgraca; i++) {
-        fscanf(file, "%s %d", igrac[i].imeIgraca, igrac[i].rezultat);
-        printf("%s: %d\n", igrac[i].imeIgraca, &igrac[i].rezultat);
+    while (fscanf(file, "%s %d", igrac[brojIgraca].imeIgraca, &igrac[brojIgraca].rezultat) != EOF) {
+        brojIgraca++;
     }
 
     fclose(file);
 }
-
+//23
 void sortirajIgrace() {
     for (int i = 0; i < brojIgraca - 1; i++) {
         int maxIndex = i;
@@ -301,20 +299,22 @@ void sortirajIgrace() {
 
 void ispisSortiranihIgraca() {
     printf("Igraci sortirani po rezultatu:\n");
-    brojIgraca = 5;
-    FILE* file = fopen("igraci.txt", "r");
     for (int i = 0; i < brojIgraca; i++) {
-        printf("a");
-        fscanf(file, "%s: %d", igrac[i].imeIgraca, &igrac[i].rezultat);
-        printf("%s: %d\n", igrac[i].imeIgraca, &igrac[i].rezultat);
+        printf("%s: %d\n", igrac[i].imeIgraca, igrac[i].rezultat);
     }
-    fclose(file);
 }
 
 void izlazIzPrograma() {
-    printf("Zelite li sigurno izaci(da/ne: )");
-    char odabir[10];
-    scanf("%9s", odabir);
+    printf("Zelite li sigurno izaci(da/ne): ");
+    char odabir[3];
+
+    if (scanf("%2s", odabir) != 1) {
+        printf("Neispravan unos!\n");
+        return;
+    }
+
+    while (getchar() != '\n');
+
     if (strcmp(odabir, "da") == 0) {
         oslobodiMemorijuPitanja();
         oslobodiMemorijuIgraca();
@@ -323,41 +323,8 @@ void izlazIzPrograma() {
     else if (strcmp(odabir, "ne") == 0) {
         return;
     }
-
-    izlazIzPrograma();
-
-}
-#include "functions.h"
-#include <stdlib.h>
-
-QUESTION* question;
-PLAYER* player;
-
-int allocateQuestions() {
-	question = (QUESTION*)calloc(10, sizeof(QUESTION)); 
-
-	if (question == NULL) {
-		perror("allocateQuestion");
-		return 1;
-	}
-	return 0;
-}
-
-int allocatePlayer() {
-	 player = (PLAYER*)calloc(1, sizeof(PLAYER));
-
-	if (player == NULL) {
-		perror("allocatePlayer");
-		return 1;
-	}
-	return 0;
-}
-
-void freeQuestions() {
-
-	free(question);
-}
-
-void freePlayer() {
-	free(player);
+    else {
+        printf("Neispravan odgovor\n");
+        izlazIzPrograma(); //25
+    }
 }
