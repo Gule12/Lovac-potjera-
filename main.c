@@ -10,12 +10,13 @@ int main() {
     char imeIgraca[100];
     int rezultat = 0;
 
-    if (zauzmiMemorijuPitanja() != 0 || zauzmiMemorijuPitanja() != 0) {
+    if (zauzmiMemorijuPitanja() != 0 || zauzmiMemorijuIgraca() != 0) {
         printf("Neuspjesno zauzimanje memorije\n");
         return 1;
     }
 
     while (1) {
+    a:
         printf("\n-----LOVAC-----\n");
         printf("1. IGRAJ\n");
         printf("2. DODAJ IGRACA\n");
@@ -23,13 +24,15 @@ int main() {
         printf("4. ISPIS IGRACA\n");
         printf("5. IZLAZ\n");
         printf("Unesi svoj izbor: ");
+        //14
         do {
             scanf("%d", &izbor);
-            //printf("Izabrao si: %c", getchar());
+           
             printf("%d\n", izbor);
             if (izbor < 1 || izbor >  5) {
                 printf("Neispravan unos. Ponovno unesite izbor: ");
                 isprazniOdabir();
+                while (getchar() != '\n');
             }
         } while (izbor < 1 || izbor > 5);
 
@@ -62,6 +65,7 @@ int main() {
             izbrisiIgraca(imeIgraca);
             break;
         case IspisIgraca:
+            PRINT();
             citajIgrace();
             sortirajIgrace();
             ispisSortiranihIgraca();
@@ -69,6 +73,7 @@ int main() {
         case Izlaz:
             printf("Izlazenje iz programa.\n");
             izlazIzPrograma();
+            goto a;
         default:
             printf("Neispravan unos. Pokusaj ponovno.\n");
         }
@@ -77,3 +82,4 @@ int main() {
 
     return 0;
 }
+
